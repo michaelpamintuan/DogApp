@@ -1,16 +1,12 @@
-<%= form_with model: dog do |form| %>
+<%= form_with model: @dog do |form| %>
     <div>
       <%= form.label :name %><br>
       <%= form.text_field :name %>
-        <div><%= message %></div>
-      <% end %>
     </div>
   
     <div>
       <%= form.label :motto %><br>
       <%= form.text_area :motto %><br>
-        <div><%= message %></div>
-      <% end %>
     </div>
   
     <div>

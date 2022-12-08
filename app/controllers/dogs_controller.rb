@@ -1,4 +1,5 @@
 class DogsController < ApplicationController
+
   def index
     @dogs = Dog.all
   end
@@ -14,7 +15,11 @@ class DogsController < ApplicationController
   def create
     @dog = Dog.new(dog_params)
 
-    redirect_to dog_path(@dog)
+    if @dog.save
+      redirect_to @dog
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -23,13 +28,22 @@ class DogsController < ApplicationController
 
   def update
     @dog = Dog.find(params[:id])
-    @dog.update(dog_params)
 
-    redirect_to dog_path(@dog)
+    if @dog.update(dog_params)
+      redirect_to @dog
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @dog = Dog.find(params[:id])
+    @dog.destroy
+
+    redirect_to root_path, status: :see_other
   end
 
   private
-
   def dog_params
     params.require(:dog).permit(:name, :motto)
   end
